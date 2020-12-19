@@ -1,0 +1,22 @@
+#background {
+  /* background: rgb(25, 20, 20);
+  background: linear-gradient(
+    180deg,
+    rgba(25, 20, 20, 1) 66%,
+    rgba(42, 39, 40, 1) 77%,
+    rgba(81, 82, 87, 1) 100%,
+    rgba(200, 214, 229, 1) 100%
+  ); */
+
+  /* background-color: #191414; */
+  background-color: #212121;
+}
+
+#login-button {
+  background-color: #1db954;
+  height: fit-content;
+}
+
+#title {
+  font-family: "Josefin Sans", sans-serif;
+}
