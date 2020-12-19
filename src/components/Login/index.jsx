@@ -34,33 +34,15 @@ const Login = () => {
   };
 
   return (
-    <div
-      id="background"
-      style={{
-        width: "100%",
-        height: "100vh",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        flexDirection: "row",
-      }}
-    >
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          alignItems: "center",
-          paddingRight: "20rem",
-        }}
-      >
-        {process.env.NOT_SECRET_CODE}
-        <Image src={logo} style={{ width: 150, marginRight: "5rem" }} />
+    <div id="background">
+      <div id="content-container">
+        <Image id="logo" src={logo} style={{ width: 150 }} />
 
         <Button
           onClick={login}
           size="medium"
           id="login-button"
-          style={{ color: "white", marginTop: "8rem" }}
+          style={{ color: "white" }}
         >
           <Icon name="spotify" style={{ color: "white" }} /> Login With Spotify
         </Button>
