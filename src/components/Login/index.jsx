@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Divider, Icon, Segment, Image } from "semantic-ui-react";
+import { Button, Icon, Image } from "semantic-ui-react";
 import { generateRandomString } from "../../utils";
 // import { CLIENT_ID, REDIRECT_URI } from "../../config";
 import logo from "../../branding/1.png";

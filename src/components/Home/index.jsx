@@ -5,7 +5,6 @@ import "./index.css";
 
 import {
   Header,
-  Item,
   Checkbox,
   Segment,
   Loader,
@@ -43,7 +42,7 @@ const Home = ({ user }) => {
     );
     setTrackList(commonTracks);
     setTimeout(() => setLoadingIntersection(false), 200 * 2);
-  }, [included]);
+  }, [included, playlistsTracks]);
 
   const getCommonTracksInPlaylists = (tracks) => {
     console.log("beggining common");
