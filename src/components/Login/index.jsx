@@ -15,6 +15,10 @@ const Login = () => {
     localStorage.setItem(stateKey, state);
 
     const scope = "user-read-private user-read-email playlist-read-private";
+    const redirectURI =
+      process.env.NODE_ENV === "production"
+        ? process.env.REACT_APP_REDIRECT_URI
+        : "http://localhost:3000";
 
     let url = "https://accounts.spotify.com/authorize";
     url += "?response_type=token";
@@ -22,8 +26,7 @@ const Login = () => {
       "&client_id=" +
       encodeURIComponent(process.env.REACT_APP_SPOTIFY_CLIENT_ID);
     url += "&scope=" + encodeURIComponent(scope);
-    url +=
-      "&redirect_uri=" + encodeURIComponent(process.env.REACT_APP_REDIRECT_URI);
+    url += "&redirect_uri=" + encodeURIComponent(redirectURI);
     url += "&state=" + encodeURIComponent(state);
     url += "&show_dialog=" + encodeURIComponent("true");
 
