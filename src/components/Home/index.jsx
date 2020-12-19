@@ -25,6 +25,7 @@ const Home = ({ user }) => {
   const [included, setIncluded] = useState({});
   const [loadingIntersection, setLoadingIntersection] = useState(false);
   const [playlistsVisible, setPlaylistsVisible] = useState(true);
+  const [scrollButtonStuck, setScrollButtonStuck] = useState(false);
 
   const contextRef = createRef();
 
@@ -115,6 +116,18 @@ const Home = ({ user }) => {
     initialiseCommonTracks();
   }, []);
 
+  const handleScrollButtonStuck = (event, data) => {
+    if (!scrollButtonStuck) {
+      setScrollButtonStuck(true);
+    }
+  };
+
+  const handleScrollButtonUnstuck = (event, data) => {
+    if (scrollButtonStuck) {
+      setScrollButtonStuck(false);
+    }
+  };
+
   const handleCheckboxChange = (event, data, playlistId) => {
     const newIncluded = { ...included, [playlistId]: data.checked };
     setIncluded(newIncluded);
@@ -126,7 +139,7 @@ const Home = ({ user }) => {
         display: "flex",
         flexWrap: "wrap",
         width: "100%",
-        padding: "1rem",
+        paddingTop: "1rem",
         // backgroundColor: "#f5f6fa",
         backgroundColor: "#2d2d2d",
       }}
@@ -137,7 +150,7 @@ const Home = ({ user }) => {
           width: "100%",
           justifyContent: "space-between",
           alignItems: "flex-start",
-          marginBottom: "2rem",
+          marginBottom: "1rem",
         }}
       >
         <div>
@@ -161,7 +174,11 @@ const Home = ({ user }) => {
       <Ref innerRef={contextRef}>
         <Grid reversed="mobile" stackable columns={2} style={{ width: "100%" }}>
           <Grid.Column>
-            <Segment inverted id="common-tracks-segment">
+            <Segment
+              inverted
+              id="common-tracks-segment"
+              className="segment-panel"
+            >
               <div
                 style={{
                   display: "flex",
@@ -171,36 +188,14 @@ const Home = ({ user }) => {
               >
                 <Header
                   as="h2"
-                  style={{ color: "#1692a4" }}
+                  // style={{ color: "#1692a4" }}
+                  style={{ color: "white" }}
                   className="segment-title"
                 >
                   {/* <Header as="h2" style={{ color: "#1DB954" }}> */}
                   Tracks in Common
                 </Header>
                 {!loadingIntersection ? (
-                  // <Item.Group>
-                  //   {trackList.map((item) => {
-                  //     const trackName = item.track.name;
-                  //     const trackArtist = _.first(item.track.artists).name;
-                  //     const trackImage = item.track.album.images
-                  //       ? _.first(item.track.album.images).url
-                  //       : "";
-                  //     return (
-                  //       <Item>
-                  //         <Item.Image
-                  //           size="tiny"
-                  //           src={trackImage}
-                  //           style={{ borderRadius: 100 }}
-                  //           className="track-image"
-                  //         />
-                  //         <Item.Content verticalAlign="middle">
-                  //           <Item.Header>{trackName}</Item.Header>
-                  //           <Item.Meta>{trackArtist}</Item.Meta>
-                  //         </Item.Content>
-                  //       </Item>
-                  //     );
-                  //   })}
-                  // </Item.Group>
                   <ul style={{ width: "100%", paddingLeft: 0 }}>
                     {trackList.map((item) => {
                       const trackName = item.track.name;
@@ -261,10 +256,11 @@ const Home = ({ user }) => {
               </div>
             </Segment>
           </Grid.Column>
-          <Grid.Column>
+          <Grid.Column id="playlist-column">
             <Segment
               inverted
               id="playlist-segment"
+              className="segment-panel"
               // style={{ paddingLeft: "3rem", paddingRight: "3rem" }}
             >
               <div
@@ -276,7 +272,7 @@ const Home = ({ user }) => {
               >
                 <Header
                   as="h2"
-                  style={{ color: "#1692a4" }}
+                  style={{ color: "white" }}
                   className="segment-title"
                 >
                   Playlists
@@ -286,6 +282,8 @@ const Home = ({ user }) => {
                   <Button
                     icon
                     size="mini"
+                    inverted
+                    circular
                     onClick={() => setPlaylistsVisible(!playlistsVisible)}
                   >
                     <Icon name={playlistsVisible ? "hide" : "unhide"} />
@@ -303,6 +301,7 @@ const Home = ({ user }) => {
                           <div
                             style={{
                               display: "flex",
+                              justifyContent: "space-between",
                             }}
                           >
                             <div style={{ display: "flex" }}>
@@ -312,6 +311,7 @@ const Home = ({ user }) => {
                                   width: "70px",
                                   height: "70px",
                                   marginRight: "1rem",
+                                  borderRadius: "5px",
                                 }}
                               />
                               <span
@@ -329,6 +329,7 @@ const Home = ({ user }) => {
                               onChange={(event, data) =>
                                 handleCheckboxChange(event, data, playlist.id)
                               }
+                              style={{ height: "fit-content" }}
                             />
                           </div>
                         </li>
@@ -336,31 +337,6 @@ const Home = ({ user }) => {
                     })}
                   </ul>
                 )}
-
-                {/* <Item.Group>
-                  {spotifyPlaylists.map((playlist) => {
-                    const imageUrl = playlist.images
-                      ? _.first(playlist.images).url
-                      : "";
-                    return (
-                      <Item className="playlist-item" style={{ width: "550px" }}>
-                        <Item.Image size="tiny" src={imageUrl} />
-                        <Item.Content verticalAlign="middle">
-                          <Item.Header>{playlist.name}</Item.Header>
-                          <Item.Extra>
-                            <Checkbox
-                              slider
-                              checked={included[playlist.id]}
-                              onChange={(event, data) =>
-                                handleCheckboxChange(event, data, playlist.id)
-                              }
-                            />
-                          </Item.Extra>
-                        </Item.Content>
-                      </Item>
-                    );
-                  })}
-                </Item.Group> */}
               </div>
               <Sticky
                 context={contextRef}
@@ -368,24 +344,16 @@ const Home = ({ user }) => {
                   display: "flex",
                   width: "100%",
                   justifyContent: "flex-end",
+                  paddingRight: scrollButtonStuck ? "4rem" : null,
                 }}
+                offset={10}
+                onStick={handleScrollButtonStuck}
+                onUnstick={handleScrollButtonUnstuck}
               >
-                {/* <div
-                  style={{
-                    height: 50,
-                    width: 50,
-                    backgroundColor: "#ecf0f1",
-                    borderRadius: 50,
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                >
-                  <Icon name="angle double up" />
-                </div> */}
                 <Button
                   icon
-                  size="mini"
+                  inverted
+                  size={scrollButtonStuck ? "huge" : "mini"}
                   circular
                   onClick={() =>
                     window.scrollTo({ top: 0, behavior: "smooth" })
@@ -395,13 +363,6 @@ const Home = ({ user }) => {
                 </Button>
               </Sticky>
             </Segment>
-
-            {/* <div
-            id="relative-layer"
-            style={{ width: 50, height: 50, backgroundColor: "grey", right: 0 }}
-          >
-            <div id="fixed-layer">Back to top</div>
-          </div> */}
           </Grid.Column>
         </Grid>
       </Ref>

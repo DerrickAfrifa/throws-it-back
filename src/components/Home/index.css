@@ -24,6 +24,13 @@ body {
 #playlist-segment {
   /* margin-right: 2rem;
   margin-left: 2rem; */
+  border-radius: 0 !important;
+}
+
+#playlist-column {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  margin-top: 0;
 }
 
 #common-tracks-segment {
@@ -38,6 +45,11 @@ body {
 .segment-title {
   font-family: "Josefin Sans", sans-serif !important;
   letter-spacing: 1px;
+}
+
+.segment-panel {
+  border-top: solid 1px #1692a4 !important;
+  border-bottom: solid 1px #1692a4 !important;
 }
 
 @media (max-width: 400px) {
