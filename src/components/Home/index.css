@@ -38,8 +38,8 @@ body {
 }
 
 #common-tracks-segment {
-  padding-left: 3rem;
-  padding-right: 3rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
 }
 
 .track-image {
@@ -71,6 +71,11 @@ body {
 
   #common-tracks-column {
     padding-top: 0 !important;
+  }
+
+  #common-tracks-segment {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
   }
 
   .body {

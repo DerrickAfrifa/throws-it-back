@@ -1,6 +1,7 @@
 import React, { useState, useEffect, createRef } from "react";
 import SpotifyApi from "../../spotifyApi";
 import _ from "lodash";
+import { ToastContainer, toast } from "react-toastify";
 import "./index.css";
 
 import {
@@ -28,6 +29,19 @@ const Home = ({ user }) => {
   const [scrollButtonStuck, setScrollButtonStuck] = useState(false);
 
   const contextRef = createRef();
+
+  const notifyPlaying = (trackName) => toast.dark(`Now playing: ${trackName}`);
+  const notifyError = (errorMessage) => {
+    let message = errorMessage;
+    switch (errorMessage) {
+      case "The access token expired":
+        message = "You need to sign back in. Refresh the page.";
+        break;
+      default:
+        break;
+    }
+    return toast.error(message, {});
+  };
 
   useEffect(() => {
     setLoadingIntersection(true);
@@ -133,6 +147,23 @@ const Home = ({ user }) => {
     setIncluded(newIncluded);
   };
 
+  const handlePlayClicked = (trackUri, trackName) => {
+    // console.log(
+    //   "🚀 ~ file: index.jsx ~ line 137 ~ handlePlayClicked ~ trackUri",
+    //   trackUri
+    // );
+    SpotifyApi.play({ uris: [trackUri] }, (error, value) => {
+      if (!error) {
+        console.log("value", value);
+        notifyPlaying(trackName);
+      } else {
+        // console.log("was error", error);
+        notifyError(JSON.parse(error.response).error.message);
+        console.log(JSON.parse(error.response));
+      }
+    });
+  };
+
   return (
     <div
       style={{
@@ -144,6 +175,14 @@ const Home = ({ user }) => {
         backgroundColor: "#121212",
       }}
     >
+      <ToastContainer
+        position="bottom-center"
+        autoClose={1.5 * 1000}
+        pauseOnHover
+        // hideProgressBar
+        style={{ textAlign: "center" }}
+        progressStyle={{ backgroundColor: "#1692a4" }}
+      />
       <div
         style={{
           display: "flex",
@@ -203,6 +242,7 @@ const Home = ({ user }) => {
                       const trackImage = item.track.album.images
                         ? _.first(item.track.album.images).url
                         : "";
+                      const trackUri = item.track.uri;
                       return (
                         <li style={{ listStyle: "none", marginBottom: "1rem" }}>
                           <div
@@ -214,23 +254,27 @@ const Home = ({ user }) => {
                               style={{
                                 display: "flex",
                                 alignItems: "center",
+                                justifyContent: "space-between",
                                 width: "100%",
                               }}
                             >
-                              <Image
-                                src={trackImage}
-                                style={{
-                                  width: "50px",
-                                  height: "50px",
-                                  marginRight: "1rem",
-                                  borderRadius: 100,
-                                }}
-                              />
+                              <div style={{ width: "25%" }}>
+                                <Image
+                                  src={trackImage}
+                                  style={{
+                                    width: "50px",
+                                    height: "50px",
+                                    marginRight: "1rem",
+                                    borderRadius: 100,
+                                  }}
+                                />
+                              </div>
+
                               <div
                                 style={{
                                   display: "flex",
                                   flexDirection: "column",
-                                  marginLeft: "1.5rem",
+                                  width: "60%",
                                 }}
                               >
                                 <span
@@ -241,6 +285,18 @@ const Home = ({ user }) => {
                                   {trackName}
                                 </span>
                                 <span>{trackArtist}</span>
+                              </div>
+
+                              <div style={{ width: "15%" }}>
+                                <Button
+                                  icon="play"
+                                  size="mini"
+                                  circular
+                                  inverted
+                                  onClick={() =>
+                                    handlePlayClicked(trackUri, trackName)
+                                  }
+                                />
                               </div>
                             </div>
                           </div>
@@ -353,6 +409,7 @@ const Home = ({ user }) => {
                 <Button
                   icon
                   inverted
+                  color="teal"
                   size={scrollButtonStuck ? "huge" : "mini"}
                   circular
                   onClick={() =>

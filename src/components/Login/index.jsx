@@ -14,7 +14,8 @@ const Login = () => {
 
     localStorage.setItem(stateKey, state);
 
-    const scope = "user-read-private user-read-email playlist-read-private";
+    const scope =
+      "user-read-private user-read-email playlist-read-private user-modify-playback-state";
     const redirectURI =
       process.env.NODE_ENV === "production"
         ? process.env.REACT_APP_REDIRECT_URI
