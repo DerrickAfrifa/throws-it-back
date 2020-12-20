@@ -177,9 +177,9 @@ const Home = ({ user }) => {
     >
       <ToastContainer
         position="bottom-center"
-        autoClose={1.5 * 1000}
+        autoClose={2.5 * 1000}
         pauseOnHover
-        // hideProgressBar
+        hideProgressBar
         style={{ textAlign: "center" }}
         progressStyle={{ backgroundColor: "#1692a4" }}
       />
