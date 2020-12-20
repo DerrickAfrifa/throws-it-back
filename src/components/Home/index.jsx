@@ -141,7 +141,7 @@ const Home = ({ user }) => {
         width: "100%",
         paddingTop: "1rem",
         // backgroundColor: "#f5f6fa",
-        backgroundColor: "#2d2d2d",
+        backgroundColor: "#121212",
       }}
     >
       <div
@@ -173,7 +173,7 @@ const Home = ({ user }) => {
 
       <Ref innerRef={contextRef}>
         <Grid reversed="mobile" stackable columns={2} style={{ width: "100%" }}>
-          <Grid.Column>
+          <Grid.Column id="common-tracks-column">
             <Segment
               inverted
               id="common-tracks-segment"
@@ -278,7 +278,7 @@ const Home = ({ user }) => {
                   Playlists
                 </Header>
 
-                <div style={{ position: "absolute", right: 10, top: 10 }}>
+                <div style={{ position: "absolute", right: 10, top: "1.5rem" }}>
                   <Button
                     icon
                     size="mini"
@@ -358,6 +358,7 @@ const Home = ({ user }) => {
                   onClick={() =>
                     window.scrollTo({ top: 0, behavior: "smooth" })
                   }
+                  style={{ marginRight: 0 }}
                 >
                   <Icon name="angle double up" />
                 </Button>

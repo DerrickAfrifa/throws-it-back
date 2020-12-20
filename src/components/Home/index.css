@@ -1,6 +1,7 @@
 body {
   /* background-color: #f5f6fa; */
-  background-color: #2d2d2d;
+  /* background-color: #2d2d2d; */
+  background-color: #121212;
 }
 
 #logo-text {
@@ -25,6 +26,9 @@ body {
   /* margin-right: 2rem;
   margin-left: 2rem; */
   border-radius: 0 !important;
+  border-bottom: solid 1px #03dac5 !important;
+  border-top: solid 1px #03dac5 !important;
+  padding-top: 1rem !important;
 }
 
 #playlist-column {
@@ -48,15 +52,29 @@ body {
 }
 
 .segment-panel {
-  border-top: solid 1px #1692a4 !important;
-  border-bottom: solid 1px #1692a4 !important;
+  /* border-top: solid 1px #1692a4 !important; */
+  /* border-bottom: solid 1px #1692a4 !important; */
+  /* border-bottom: solid 1px #03dac5 !important;
+  border-top: solid 1px #03dac5 !important; */
+}
+
+#common-tracks-column {
+  padding-top: 1rem !important;
 }
 
 @media (max-width: 400px) {
   #playlist-segment {
+    padding-top: 2rem !important;
     /* margin-right: 1rem;
     margin-left: 2rem; */
-    /* background-color: red; */
+  }
+
+  #common-tracks-column {
+    padding-top: 0 !important;
+  }
+
+  .body {
+    background-color: red !important;
   }
 
   .track-image {
