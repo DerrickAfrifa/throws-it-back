@@ -176,7 +176,7 @@ const Home = ({ user }) => {
       }}
     >
       <ToastContainer
-        position="bottom-center"
+        position="top-center"
         autoClose={2.5 * 1000}
         pauseOnHover
         hideProgressBar
@@ -408,7 +408,7 @@ const Home = ({ user }) => {
               >
                 <Button
                   icon
-                  inverted
+                  // inverted
                   color="teal"
                   size={scrollButtonStuck ? "huge" : "mini"}
                   circular
