@@ -2,6 +2,7 @@ import React, { useState, useEffect, createRef } from "react";
 import SpotifyApi from "../../spotifyApi";
 import _ from "lodash";
 import { ToastContainer, toast } from "react-toastify";
+import { animateScroll as scroll } from "react-scroll";
 import "./index.css";
 
 import {
@@ -16,6 +17,7 @@ import {
   Icon,
   Ref,
   Button,
+  Transition,
 } from "semantic-ui-react";
 import logo from "../../branding/4.png";
 
@@ -162,6 +164,10 @@ const Home = ({ user }) => {
         console.log(JSON.parse(error.response));
       }
     });
+  };
+
+  const scrollToTop = () => {
+    scroll.scrollToTop();
   };
 
   return (
@@ -346,7 +352,11 @@ const Home = ({ user }) => {
                   </Button>
                 </div>
 
-                {playlistsVisible && (
+                <Transition
+                  visible={playlistsVisible}
+                  animation="slide down"
+                  duration={500}
+                >
                   <ul style={{ width: "100%", paddingLeft: 0 }}>
                     {spotifyPlaylists.map((playlist) => {
                       const imageUrl = playlist.images
@@ -392,7 +402,7 @@ const Home = ({ user }) => {
                       );
                     })}
                   </ul>
-                )}
+                </Transition>
               </div>
               <Sticky
                 context={contextRef}
@@ -412,9 +422,7 @@ const Home = ({ user }) => {
                   color="teal"
                   size={scrollButtonStuck ? "huge" : "mini"}
                   circular
-                  onClick={() =>
-                    window.scrollTo({ top: 0, behavior: "smooth" })
-                  }
+                  onClick={() => scrollToTop()}
                   style={{ marginRight: 0 }}
                 >
                   <Icon name="angle double up" />
