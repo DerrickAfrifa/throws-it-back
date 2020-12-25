@@ -3,6 +3,7 @@ import SpotifyApi from "../../spotifyApi";
 import _ from "lodash";
 import { ToastContainer, toast } from "react-toastify";
 import { animateScroll as scroll } from "react-scroll";
+import helpImage from "../../images/help.png";
 import "./index.css";
 
 import {
@@ -18,6 +19,7 @@ import {
   Ref,
   Button,
   Transition,
+  Modal,
 } from "semantic-ui-react";
 import logo from "../../branding/4.png";
 
@@ -29,6 +31,7 @@ const Home = ({ user }) => {
   const [loadingIntersection, setLoadingIntersection] = useState(false);
   const [playlistsVisible, setPlaylistsVisible] = useState(true);
   const [scrollButtonStuck, setScrollButtonStuck] = useState(false);
+  const [openHelpModal, setOpenHelpModal] = useState(false);
 
   const contextRef = createRef();
 
@@ -208,11 +211,47 @@ const Home = ({ user }) => {
               fontSize: "1.2rem",
               color: "white",
               fontFamily: "Josefin Sans",
-              paddingRight: "2rem",
+              paddingRight: "1rem",
+              marginLeft: "1rem",
             }}
           >
             <b>{user.display_name}</b>
           </span>
+          <Modal
+            onClose={() => setOpenHelpModal(false)}
+            onOpen={() => setOpenHelpModal(true)}
+            open={openHelpModal}
+            trigger={
+              <Button
+                icon
+                size="mini"
+                inverted
+                circular
+                onClick={() => setOpenHelpModal(true)}
+                style={{ marginRight: "1rem" }}
+              >
+                <Icon name="help" />
+              </Button>
+            }
+          >
+            <Modal.Header>Help</Modal.Header>
+            <Modal.Content image>
+              <Image size="small" src={helpImage} wrapped />
+              <Modal.Description>
+                <h3>Please complete the following steps</h3>
+                <p>1. Search for your Spotify wrapped playlists</p>
+                <p>
+                  2. Add the playlists to your library by pressing the like
+                  button
+                </p>
+              </Modal.Description>
+            </Modal.Content>
+            <Modal.Actions>
+              <Button onClick={() => setOpenHelpModal(false)} positive>
+                Ok
+              </Button>
+            </Modal.Actions>
+          </Modal>
         </div>
       </div>
 
