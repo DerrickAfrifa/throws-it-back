@@ -56,16 +56,12 @@ const Home = ({ user }) => {
     });
     const trackItems = includedTracks.map((trackObject) => trackObject.items);
     const commonTracks = getCommonTracksInPlaylists(trackItems);
-    console.log(
-      "🚀 ~ file: index.jsx ~ line 20 ~ useEffect ~ commonTracks",
-      commonTracks
-    );
+
     setTrackList(commonTracks);
     setTimeout(() => setLoadingIntersection(false), 200 * 2);
   }, [included, playlistsTracks]);
 
   const getCommonTracksInPlaylists = (tracks) => {
-    console.log("beggining common");
     return _.intersectionWith(...tracks, (value, other) =>
       _.isEqual(value.track.id, other.track.id)
     );
@@ -75,23 +71,14 @@ const Home = ({ user }) => {
     const initialiseCommonTracks = async () => {
       try {
         const playlists = await SpotifyApi.getUserPlaylists({ limit: 50 });
-        console.log("User playlists", playlists);
         let spotifyPlaylists = playlists.items.filter(
           (item) =>
             item.owner.id === "spotify" &&
             item.name.startsWith("Your Top Songs")
         );
-        console.log(
-          "🚀 ~ file: index.jsx ~ line 55 ~ initialiseCommonTracks ~ spotifyPlaylists",
-          spotifyPlaylists
-        );
 
         spotifyPlaylists = spotifyPlaylists.sort((a, b) =>
           a.name < b.name ? 1 : -1
-        );
-        console.log(
-          "🚀 ~ file: index.jsx ~ line 61 ~ initialiseCommonTracks ~ spotifyPlaylists SORTED ***",
-          spotifyPlaylists
         );
 
         setSpotifyPlaylists(spotifyPlaylists);
@@ -121,11 +108,6 @@ const Home = ({ user }) => {
         const commonTracks = getCommonTracksInPlaylists(trackItems);
 
         setTrackList(commonTracks);
-
-        console.log(
-          "🚀 ~ file: index.jsx ~ line 35 ~ initialiseCommonTracks ~ playlistsTracks",
-          playlistsTracks
-        );
         setPlaylistsTracks(playlistsTracks);
       } catch (error) {
         console.error(error);
@@ -153,18 +135,11 @@ const Home = ({ user }) => {
   };
 
   const handlePlayClicked = (trackUri, trackName) => {
-    // console.log(
-    //   "🚀 ~ file: index.jsx ~ line 137 ~ handlePlayClicked ~ trackUri",
-    //   trackUri
-    // );
     SpotifyApi.play({ uris: [trackUri] }, (error, value) => {
       if (!error) {
-        console.log("value", value);
         notifyPlaying(trackName);
       } else {
-        // console.log("was error", error);
         notifyError(JSON.parse(error.response).error.message);
-        console.log(JSON.parse(error.response));
       }
     });
   };
