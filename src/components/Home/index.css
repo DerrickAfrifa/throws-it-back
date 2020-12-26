@@ -87,6 +87,25 @@ body {
   }
 }
 
+@media (min-width: 768px) {
+  #playlist-segment {
+    /* background-color: red; */
+    border-top: solid 0px black !important;
+  }
+
+  #main-grid {
+    margin-left: 0;
+  }
+
+  #playlist-column {
+    padding-right: 1rem !important;
+  }
+
+  #playlist-segment {
+    border-radius: 0.3rem !important;
+  }
+}
+
 /* @mobileBreakpoint            : 320px;
 @tabletBreakpoint            : 768px;
 @computerBreakpoint          : 992px;

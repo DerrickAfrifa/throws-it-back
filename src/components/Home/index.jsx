@@ -256,7 +256,13 @@ const Home = ({ user }) => {
       </div>
 
       <Ref innerRef={contextRef}>
-        <Grid reversed="mobile" stackable columns={2} style={{ width: "100%" }}>
+        <Grid
+          id="main-grid"
+          reversed="mobile"
+          stackable
+          columns={2}
+          style={{ width: "100%" }}
+        >
           <Grid.Column id="common-tracks-column">
             <Segment
               inverted
@@ -281,7 +287,7 @@ const Home = ({ user }) => {
                 </Header>
                 {!loadingIntersection ? (
                   <ul style={{ width: "100%", paddingLeft: 0 }}>
-                    {trackList.map((item) => {
+                    {trackList.map((item, index) => {
                       const trackName = item.track.name;
                       const trackArtist = _.first(item.track.artists).name;
                       const trackImage = item.track.album.images
@@ -289,7 +295,10 @@ const Home = ({ user }) => {
                         : "";
                       const trackUri = item.track.uri;
                       return (
-                        <li style={{ listStyle: "none", marginBottom: "1rem" }}>
+                        <li
+                          key={index}
+                          style={{ listStyle: "none", marginBottom: "1rem" }}
+                        >
                           <div
                             style={{
                               display: "flex",
@@ -397,12 +406,15 @@ const Home = ({ user }) => {
                   duration={500}
                 >
                   <ul style={{ width: "100%", paddingLeft: 0 }}>
-                    {spotifyPlaylists.map((playlist) => {
+                    {spotifyPlaylists.map((playlist, index) => {
                       const imageUrl = playlist.images
                         ? _.first(playlist.images).url
                         : "";
                       return (
-                        <li style={{ listStyle: "none", marginBottom: "1rem" }}>
+                        <li
+                          key={index}
+                          style={{ listStyle: "none", marginBottom: "1rem" }}
+                        >
                           <div
                             style={{
                               display: "flex",
