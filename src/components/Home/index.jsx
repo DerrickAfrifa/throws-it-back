@@ -287,7 +287,13 @@ const Home = ({ user }) => {
                                 width: "100%",
                               }}
                             >
-                              <div style={{ width: "25%" }}>
+                              <div
+                                style={{
+                                  width: "25%",
+                                  display: "flex",
+                                  justifyContent: "center",
+                                }}
+                              >
                                 <Image
                                   src={trackImage}
                                   style={{
